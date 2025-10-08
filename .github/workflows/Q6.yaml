@@ -42,9 +42,11 @@ jobs:
 
     - name: Commit et push des fichiers d’archive et différences
       run: |
-        git config user.name "RemiViez"
+        git config user.name "RemiVez"
         git config user.email "remi.viez@univ-lehavre.fr"
-        git add Q6_archive_${{ env.DATE }}.txt || true
-        git add Q6_différences.txt || true
+        git add Q6_archive_${{ env.DATE }}.txt
+        if [ -f Q6_différences.txt ]; then git add Q6_différences.txt; fi
         git commit -m "Ajout de Q6_archives et différences du ${{ env.DATE }}" || echo "Rien à commit"
+        # Synchroniser avec la branche distante avant push
+        git pull --rebase origin main
         git push
