@@ -1,0 +1,50 @@
+name: Q6 Workflow
+
+on: [push]
+
+permissions:
+  contents: write
+
+jobs:
+  archive-q6-java:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Définir la date au format JJ-MM-AAAA-HHMMSS
+      id: vars
+      run: echo "DATE=$(date -d '+2 hour' +'%d-%m-%Y-%H%M%S')" >> $GITHUB_ENV
+
+    - name: Créer Q6_archive_DATE.txt avec nom, prénom, contenu Java, taille fichier
+      run: |
+        echo "Nom et prénom : Remi Vez" > Q6_archive_${{ env.DATE }}.txt
+        echo "" >> Q6_archive_${{ env.DATE }}.txt
+        cat Q6.java >> Q6_archive_${{ env.DATE }}.txt
+        echo "" >> Q6_archive_${{ env.DATE }}.txt
+        echo "Taille du fichier Q6.java :" >> Q6_archive_${{ env.DATE }}.txt
+        wc -l Q6.java >> Q6_archive_${{ env.DATE }}.txt
+        wc -m Q6.java >> Q6_archive_${{ env.DATE }}.txt
+
+    - name: Trouver la dernière archive Q6 précédente
+      id: find_last
+      run: |
+        ls -1 Q6_archive_*.txt | grep -v "Q6_archive_${{ env.DATE }}.txt" | sort -r > archives_list.txt || true
+        LAST_ARCHIVE=$(head -n 1 archives_list.txt || echo "")
+        echo "LAST_ARCHIVE=$LAST_ARCHIVE" >> $GITHUB_ENV
+
+    - name: Créer Q6_différences.txt avec la diff entre archives successives
+      if: env.LAST_ARCHIVE != ''
+      run: |
+        echo "Différences entre $LAST_ARCHIVE et Q6_archive_${{ env.DATE }}.txt :" > Q6_différences.txt
+        diff $LAST_ARCHIVE Q6_archive_${{ env.DATE }}.txt >> Q6_différences.txt || true
+
+    - name: Commit et push des fichiers d’archive et différences
+      run: |
+        git config user.name "RemiVez"
+        git config user.email "remi.viez@univ-lehavre.fr"
+        git add Q6_archive_${{ env.DATE }}.txt
+        git add Q6_différences.txt
+        git commit -m "Ajout de Q6_archives et différences du ${{ env.DATE }}" || echo "Rien à commit"
+        git push
