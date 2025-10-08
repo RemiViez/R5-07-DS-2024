@@ -19,13 +19,13 @@ jobs:
 
     - name: Créer Q4_archive_DATE.txt avec nom, prénom et contenu Java
       run: |
-        echo "Nom et prénom : Remi Vez" > Q4_archive_${{ env.DATE }}.txt
+        echo "Nom et prénom : Remi Viez" > Q4_archive_${{ env.DATE }}.txt
         echo "" >> Q4_archive_${{ env.DATE }}.txt
         cat Q4.java >> Q4_archive_${{ env.DATE }}.txt
 
     - name: Commit et push du fichier
       run: |
-        git config user.name "RemiVez"
+        git config user.name "RemiViez"
         git config user.email "remi.viez@univ-lehavre.fr"
         git add Q4_archive_${{ env.DATE }}.txt
         git commit -m "Ajout de Q4_archive_${{ env.DATE }}.txt" || echo "Rien à commit"
