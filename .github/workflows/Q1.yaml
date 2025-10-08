@@ -19,7 +19,7 @@ jobs:
 
       - name: Commit et push du nouveau fichier
         run: |
-          git config user.name "RemiVez"
+          git config user.name "RemiViez"
           git config user.email "remi.viez@etu.univ-lehavre.fr"
           git add Q1_archive_README.md
           git commit -m "Ajout de Q1_archive_README.md par workflow"

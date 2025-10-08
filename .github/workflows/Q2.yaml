@@ -1,0 +1,33 @@
+name: Q2 Workflow
+
+on: [push]
+
+permissions:
+  contents: write
+
+jobs:
+  create-readme-archive:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Définir la date et l'heure d'exécution
+      id: vars
+      run: echo "RUN_DATE=$(date '+%d/%m/%Y %H:%M:%S')" >> $GITHUB_ENV
+
+    - name: Créer Q2_archive_README.md avec nom, date, contenu README
+      run: |
+        echo "Nom et prénom : Remi Viez" > Q2_archive_README.md
+        echo "Date d'exécution : $RUN_DATE" >> Q2_archive_README.md
+        echo "" >> Q2_archive_README.md
+        cat README.md >> Q2_archive_README.md
+
+    - name: Commit et push le fichier Q2_archive_README.md
+      run: |
+        git config user.name "RemiViez"
+        git config user.email "remi.viez@univ-lehavre.fr"
+        git add Q2_archive_README.md
+        git commit -m "Ajout de Q2_archive_README.md avec nom et date" || echo "Rien à commit"
+        git push
