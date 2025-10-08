@@ -42,7 +42,7 @@ jobs:
 
     - name: Commit et push des fichiers d’archive et différences
       run: |
-        git config user.name "RemiVez"
+        git config user.name "RemiViez"
         git config user.email "remi.viez@univ-lehavre.fr"
         git add Q6_archive_${{ env.DATE }}.txt
         git add Q6_différences.txt
