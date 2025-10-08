@@ -1,7 +1,7 @@
 public class Q4 {
     public static void main(String[] args) {
         if (args.length < 1) {
-            System.out.println("Usage: java Q4 <n>");
+            System.out.println("Usage: java Q4 <n> (nombre de lignes)");
             return;
         }
         int n = Integer.parseInt(args[0]);
