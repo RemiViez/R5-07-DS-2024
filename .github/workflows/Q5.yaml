@@ -1,0 +1,32 @@
+name: Q5 Workflow
+
+on: [push]
+
+permissions:
+  contents: write
+
+jobs:
+  archive-q5-java:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Définir la date au format JJ-MM-AAAA
+      id: vars
+      run: echo "DATE=$(date -d '+2 hour' +'%d-%m-%Y')" >> $GITHUB_ENV
+
+    - name: Créer Q5_archive_DATE.txt avec votre nom, prénom et contenu Java
+      run: |
+        echo "Nom et prénom : Remi Viez" > Q5_archive_${{ env.DATE }}.txt
+        echo "" >> Q5_archive_${{ env.DATE }}.txt
+        cat Q5.java >> Q5_archive_${{ env.DATE }}.txt
+
+    - name: Commit et push le fichier
+      run: |
+        git config user.name "RemiViez"
+        git config user.email "remi.viez@univ-lehavre.fr"
+        git add Q5_archive_${{ env.DATE }}.txt
+        git commit -m "Ajout de Q5_archive_${{ env.DATE }}.txt" || echo "Rien à commit"
+        git push
