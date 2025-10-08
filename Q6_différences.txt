@@ -1,0 +1,5 @@
+Différences entre Q6_archive_08-10-2025-152906.txt et Q6_archive_08-10-2025-153000.txt :
+12c12
+<                 System.out.print("o");
+---
+>                 System.out.print("Q");
