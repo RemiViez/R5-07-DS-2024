@@ -13,9 +13,10 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Définir la date et l'heure d'exécution
+    - name: Définir la date et l'heure d'exécution locale
       id: vars
-      run: echo "RUN_DATE=$(date '+%d/%m/%Y %H:%M:%S')" >> $GITHUB_ENV
+      run: echo "RUN_DATE=$(date -d '+2 hour' '+%d/%m/%Y %H:%M:%S')" >> $GITHUB_ENV
+
 
     - name: Créer Q2_archive_README.md avec nom, date, contenu README
       run: |
