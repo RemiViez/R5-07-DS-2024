@@ -44,7 +44,7 @@ jobs:
       run: |
         git config user.name "RemiViez"
         git config user.email "remi.viez@univ-lehavre.fr"
-        git add Q6_archive_${{ env.DATE }}.txt
-        git add Q6_différences.txt
+        git add Q6_archive_${{ env.DATE }}.txt || true
+        git add Q6_différences.txt || true
         git commit -m "Ajout de Q6_archives et différences du ${{ env.DATE }}" || echo "Rien à commit"
         git push
