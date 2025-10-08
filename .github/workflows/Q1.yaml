@@ -2,6 +2,10 @@ name: Q1 Workflow
 
 on: [push]
 
+
+permissions:
+  contents: write
+
 jobs:
   copy-readme:
     runs-on: ubuntu-latest
