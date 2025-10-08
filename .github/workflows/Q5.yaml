@@ -29,4 +29,5 @@ jobs:
         git config user.email "remi.viez@univ-lehavre.fr"
         git add Q5_archive_${{ env.DATE }}.txt
         git commit -m "Ajout de Q5_archive_${{ env.DATE }}.txt" || echo "Rien à commit"
+        git pull --rebase origin main
         git push
